@@ -1,0 +1,18 @@
+workspace(name = "react_webpack")
+
+load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
+
+http_archive(
+    name = "build_bazel_rules_nodejs",
+    sha256 = "2644a66772938db8d8c760334a252f1687455daa7e188073f2d46283f2f6fbb7",
+    urls = ["https://github.com/bazelbuild/rules_nodejs/releases/download/4.6.2/rules_nodejs-4.6.2.tar.gz"],
+)
+
+load("@build_bazel_rules_nodejs//:index.bzl", "yarn_install")
+
+yarn_install(
+    # Name this npm so that Bazel Label references look like @npm//package
+    name = "npm",
+    package_json = "//third_party:package.json",
+    yarn_lock = "//third_party:yarn.lock",
+)
